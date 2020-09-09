@@ -1,0 +1,6 @@
+refresh KEYWORD1
+gethold1  KEYWORD1
+gethold2  KEYWORD1
+gethold3  KEYWORD1
+getclick  KEYWORD1
+getdoubleclick  KEYWORD1

@@ -32,9 +32,9 @@ void Menue(byte mode, byte no);
 static int mode = 0;
 static byte setupBrightness;  //brightness value
 static bool setupTone;  //tone on or off
+static int setupTimerVal; //timer value
 static unsigned long oldMillis;
 static unsigned long pausedMillis;
-static int setupTimerVal; //timer value
 static byte tmpbyte;
 unsigned long tmpdword;
 
@@ -43,15 +43,12 @@ void setup() {
   LED.setOutput(outputPin);
   pinMode(inputPin, INPUT);
 
-  //get Time from EEPROM
-  setupTimerVal = EEPROM.read(2);
-  setupTimerVal |= (word)EEPROM.read(3)<<8;
+  //get Parameters from EEPROM
+  setupBrightness = EEPROM.read(0);
+  setupTone       = EEPROM.read(1);
+  setupTimerVal   = EEPROM.read(2);
+  setupTimerVal   |= (word)EEPROM.read(3)<<8;
   if (setupTimerVal == 0) setupTimerVal = 60;
-
-  for(int i = 0; i < LEDCount; i++)
-  {
-      LED.set_crgb_at(i, value);
-  }
 }
 
 //LOOP
@@ -149,7 +146,7 @@ void loop() {
      if (button1.getClick()){
        tmpbyte = tmpbyte + 1;
        if (tmpbyte > 11){
-         tmpbyte = 1;
+         tmpbyte = 0;
        }
      }
      tmpdword = (unsigned long)tmpbyte * 625ul;
@@ -251,30 +248,50 @@ void loop() {
     if (button1.getHold1())
       mode = 3;
     break;
-  case 40:  //setup tone
-    Toggle(64,64,0,255,1);
+  case 40:  //setup brightness "10%"
+    setupBrightness = 10;
+    Clock3(map(setupBrightness,0,100,0,255),map(setupBrightness,0,100,0,255),0,(unsigned long)setupBrightness * 100,LEDCount);
+    if (button1.getClick())
+      mode = 41;
     if (button1.getHold1())
-      mode = 4;
+      mode = 49;
     break;
-  case 41:  //setup brightness
+  case 41:  //setup brightness "25%"
+    setupBrightness = 25;
+    Clock3(map(setupBrightness,0,100,0,255),map(setupBrightness,0,100,0,255),0,(unsigned long)setupBrightness * 100,LEDCount);
+    if (button1.getClick())
+      mode = 42;
+    if (button1.getHold1())
+      mode = 49;
     break;
-  case 401:  //setup tone "off"
+  case 42:  //setup brightness "50%"
+    setupBrightness = 50;
+    Clock3(map(setupBrightness,0,100,0,255),map(setupBrightness,0,100,0,255),0,(unsigned long)setupBrightness * 100,LEDCount);
+    if (button1.getClick())
+      mode = 43;
+    if (button1.getHold1())
+      mode = 49;
     break;
-  case 402:  //setup tone "on"
+  case 43:  //setup brightness "75%"
+    setupBrightness = 75;
+    Clock3(map(setupBrightness,0,100,0,255),map(setupBrightness,0,100,0,255),0,(unsigned long)setupBrightness * 100,LEDCount);
+    if (button1.getClick())
+      mode = 44;
+    if (button1.getHold1())
+      mode = 49;
     break;
-  case 403:  //setup tone "save"
+  case 44:  //setup brightness "100%"
+    setupBrightness = 100;
+    Clock3(map(setupBrightness,0,100,0,255),map(setupBrightness,0,100,0,255),0,(unsigned long)setupBrightness * 100,LEDCount);
+    if (button1.getClick())
+      mode = 40;
+    if (button1.getHold1())
+      mode = 49;
     break;
-  case 411:  //setup brightness "10%"
-    break;
-  case 412:  //setup brightness "25%"
-    break;
-  case 413:  //setup brightness "50%"
-    break;
-  case 414:  //setup brightness "75%"
-    break;
-  case 415:  //setup brightness "100%"
-    break;
-  case 416:  //setup brightness "save"
+  case 49:  //setup brightness "save"
+    EEPROM.write(0,setupBrightness);
+    delay(50);
+    mode = 4;
     break;
   case 99:
     Black();

@@ -179,63 +179,63 @@ void loop() {
     mode = 20; 
     break;
   case 30:  //light scene 1
-    Toggle(64,0,0,255,1);
+    Toggle(setupBrightness,0,0,255,1);
     if (button1.getClick())
       mode++;
     if (button1.getHold1())
       mode = 3;
     break;
   case 31:  //light scene 2
-    Toggle(64,64,0,255,1);
+    Toggle(setupBrightness,setupBrightness,0,255,1);
     if (button1.getClick())
       mode++;
     if (button1.getHold1())
       mode = 3;
     break;
   case 32:  //light scene 3
-    Toggle(0,64,0,255,1);
+    Toggle(0,setupBrightness,0,255,1);
     if (button1.getClick())
       mode++;
     if (button1.getHold1())
       mode = 3;
     break;
   case 33:  //light scene 4
-    Toggle(0,64,64,255,1);
+    Toggle(0,setupBrightness,setupBrightness,255,1);
     if (button1.getClick())
       mode++;
     if (button1.getHold1())
       mode = 3;
     break;
   case 34:  //light scene 5
-    Toggle(0,0,64,255,1);
+    Toggle(0,0,setupBrightness,255,1);
     if (button1.getClick())
       mode++;
     if (button1.getHold1())
       mode = 3;
     break;
   case 35:  //light scene 6
-    Toggle(64,0,64,255,1);
+    Toggle(setupBrightness,0,setupBrightness,255,1);
     if (button1.getClick())
       mode++;
     if (button1.getHold1())
       mode = 3;
     break;
   case 36:  //light scene 7
-    Full(200,0,0);
+    Full(setupBrightness,0,0);
     if (button1.getClick())
       mode++;
     if (button1.getHold1())
       mode = 3;
     break;
   case 37:  //light scene 8
-    Full(0,200,0);
+    Full(0,setupBrightness,0);
     if (button1.getClick())
       mode++;
     if (button1.getHold1())
       mode = 3;
     break;
   case 38:  //light scene 9
-    Full(0,0,200);
+    Full(0,0,setupBrightness);
     if (button1.getClick())
       mode++;
     if (button1.getHold1())
